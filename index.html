@@ -32,8 +32,8 @@
                 <input id="photoInput" type="file" accept="image/*" />
                 Preview Photo
               </label>
-              <button id="startButton" class="primary-button" type="button">Start 30s Run</button>
-              <p id="resultText" class="result-text">Collect capsules to unlock this pet's sticker book.</p>
+              <button id="startButton" class="primary-button" type="button" disabled>Loading Assets...</button>
+              <p id="resultText" class="result-text">Loading the local game build.</p>
             </div>
           </div>
         </div>
@@ -61,10 +61,17 @@
       </section>
     </main>
 
-    <script src="./main.js"></script>
+    <script src="./main.js?v=3"></script>
     <script>
       if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("./sw.js");
+        const isLocal = ["localhost", "127.0.0.1", ""].includes(location.hostname);
+        if (isLocal) {
+          navigator.serviceWorker.getRegistrations().then((registrations) => {
+            registrations.forEach((registration) => registration.unregister());
+          });
+        } else {
+          navigator.serviceWorker.register("./sw.js?v=3");
+        }
       }
     </script>
   </body>

@@ -1,4 +1,4 @@
-const CACHE_NAME = "pet-jet-dash-v1";
+const CACHE_NAME = "pet-jet-dash-v3";
 const ASSETS = [
   "./",
   "./index.html",

@@ -132,6 +132,8 @@ function loadImage(src) {
 }
 
 async function loadAssets() {
+  startButton.disabled = true;
+  startButton.textContent = "Loading Assets...";
   const entries = [
     ...Object.entries(assetPaths).filter(([, value]) => !Array.isArray(value)),
     ...assetPaths.obstacles.map((src, i) => [`obstacle${i}`, src]),
@@ -140,6 +142,9 @@ async function loadAssets() {
   const loaded = await Promise.all(entries.map(async ([key, src]) => [key, await loadImage(src)]));
   for (const [key, img] of loaded) images[key] = img;
   state.ready = true;
+  startButton.disabled = false;
+  startButton.textContent = "Start 30s Run";
+  resultText.textContent = "Collect capsules to unlock this pet's sticker book.";
   avatarPreview.classList.add("has-image");
   avatarPreview.style.backgroundImage = `url("${assetPaths.player}")`;
   renderStickerBook();
@@ -153,7 +158,10 @@ async function loadAssets() {
 }
 
 function resetGame() {
-  if (!state.ready) return;
+  if (!state.ready) {
+    resultText.textContent = "Assets are still loading. Try again in a moment.";
+    return;
+  }
   state.running = true;
   state.ended = false;
   state.time = 0;
@@ -816,6 +824,8 @@ configureCanvas();
 renderStickerBook();
 loadAssets().catch((error) => {
   console.error(error);
+  startButton.disabled = true;
+  startButton.textContent = "Asset Load Failed";
   resultText.textContent = "Asset loading failed. Check generated asset paths.";
 });
 state.last = performance.now();

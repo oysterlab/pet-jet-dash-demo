@@ -173,6 +173,12 @@ canvas {
   font-weight: 800;
 }
 
+.primary-button:disabled {
+  cursor: wait;
+  background: #aeb8bd;
+  box-shadow: none;
+}
+
 .upload-button {
   display: grid;
   place-items: center;
