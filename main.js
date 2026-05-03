@@ -143,6 +143,13 @@ async function loadAssets() {
   avatarPreview.classList.add("has-image");
   avatarPreview.style.backgroundImage = `url("${assetPaths.player}")`;
   renderStickerBook();
+  if (new URLSearchParams(window.location.search).get("autoplay") === "1") {
+    resetGame();
+    state.pressing = true;
+    setTimeout(() => {
+      state.pressing = false;
+    }, 900);
+  }
 }
 
 function resetGame() {
@@ -543,6 +550,12 @@ function drawBackground() {
     return;
   }
   const bg = images.bgSky;
+  if (mobileLayout) {
+    drawCover(bg, 0, 0, W, H);
+    ctx.fillStyle = "rgba(255,250,241,0.08)";
+    ctx.fillRect(0, 0, W, H);
+    return;
+  }
   const offset = (state.time * (mobileLayout ? 14 : 22)) % W;
   drawCover(bg, -offset, 0, W, H);
   drawCover(bg, W - offset, 0, W, H);
