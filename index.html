@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pet Jet Dash</title>
+    <meta name="theme-color" content="#0f9f9a" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="./assets/pwa/icon-192.png" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="game-surface" aria-label="Pet Dash game">
+        <div class="topbar">
+          <div>
+            <p class="eyebrow">7-Day Pet Pass Demo</p>
+            <h1>Collect stickers by flying your pet.</h1>
+          </div>
+          <div class="scoreboard" aria-live="polite">
+            <span>Score</span>
+            <strong id="score">0</strong>
+          </div>
+        </div>
+
+        <div class="stage-wrap">
+          <canvas id="game" width="1280" height="720"></canvas>
+          <div id="overlay" class="overlay">
+            <div class="upload-card">
+              <div class="avatar-preview" id="avatarPreview"></div>
+              <label class="upload-button">
+                <input id="photoInput" type="file" accept="image/*" />
+                Preview Photo
+              </label>
+              <button id="startButton" class="primary-button" type="button">Start 30s Run</button>
+              <p id="resultText" class="result-text">Collect capsules to unlock this pet's sticker book.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="controls">
+          <button id="jumpButton" class="control-button" type="button" aria-label="Fly">
+            <span class="icon-arrow"></span>
+          </button>
+          <button id="dashButton" class="control-button wide" type="button">Boost</button>
+          <button id="restartButton" class="control-button" type="button" aria-label="Restart">
+            <span class="icon-refresh"></span>
+          </button>
+        </div>
+
+        <section class="sticker-book" aria-label="Sticker book">
+          <div class="book-head">
+            <div>
+              <p class="eyebrow">Sticker Book</p>
+              <h2>Starter Set</h2>
+            </div>
+            <div class="progress-pill"><span id="stickerProgress">0/6</span> collected</div>
+          </div>
+          <div id="stickerGrid" class="sticker-grid"></div>
+        </section>
+      </section>
+    </main>
+
+    <script src="./main.js"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("./sw.js");
+      }
+    </script>
+  </body>
+</html>
